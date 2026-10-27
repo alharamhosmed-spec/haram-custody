@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>إدارة العهدة</title>
-<meta name="description" content="إدارة العهدة — نظام إدارة العهدة المالية: الفواتير والتصفيات والسندات والحركة المالية بمستشفى الحرم">
+<title>متقن لإدارة المشاريع - عُهدة</title>
+<meta name="description" content="متقن لإدارة المشاريع - عُهدة — إدارة العهدة المالية: الفواتير والتصفيات والسندات والحركة المالية بمستشفى الحرم">
 <meta name="theme-color" content="#0F2A3F">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="إدارة العهدة">
-<meta name="application-name" content="إدارة العهدة">
+<meta name="apple-mobile-web-app-title" content="متقن عُهدة">
+<meta name="application-name" content="متقن لإدارة المشاريع - عُهدة">
 <meta name="author" content="مدير إدارة المشاريع: م. أحمد بندر الردادي">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
@@ -24,11 +24,12 @@
 window.APP_CONFIG = {
   // رابط النشر حق «نظام إدارة العهدة المالية» في Google Apps Script (ينتهي بـ /exec)
   GAS_URL: 'https://script.google.com/macros/s/AKfycbyJKHj2kBux3ApT4iKl0UzR4oISnXEf739KE3D5ytx0D6gbfUnO1erBZRPLAfzPpNZ-iA/exec',
-  NAME: 'إدارة العهدة',
-  SUB: 'نظام إدارة العهدة المالية — إدارة المشاريع',
+  BRAND: 'متقن لإدارة المشاريع',
+  NAME: 'عُهدة',
+  SUB: 'العهدة المالية والفواتير — مستشفى الحرم',
   ORG: 'مستشفى الحرم',
   OWNER: 'مدير إدارة المشاريع: م. أحمد بندر الردادي',
-  VERSION: '1.0.0',
+  VERSION: '1.1.0',
   KEY: 'haramCustody',          // بادئة التخزين المحلي — كل تطبيق ببادئته (نفس النطاق github.io)
   PASS: [],                 // لا توجد باراميترات تُمرَّر للنظام حالياً
   LOAD_TIMEOUT_MS: 25000
@@ -98,13 +99,14 @@ body{font-family:var(--font);color:var(--text);-webkit-font-smoothing:antialiase
 
 <div class="splash" id="splash">
   <img src="icon-192.png" alt="">
-  <h1 id="spName">إدارة العهدة</h1>
+  <div id="spBrand" style="font-size:13px;color:#A9D8D4;font-weight:600;margin-top:4px">متقن لإدارة المشاريع</div>
+  <h1 id="spName" style="margin-top:0">عُهدة</h1>
   <p id="spSub"></p>
   <div class="spin"></div>
   <div class="copy" id="spCopy"></div>
 </div>
 
-<iframe id="frame" title="إدارة العهدة"
+<iframe id="frame" title="متقن لإدارة المشاريع - عُهدة"
   allow="camera; microphone; geolocation; clipboard-read; clipboard-write; fullscreen"
   referrerpolicy="no-referrer-when-downgrade"></iframe>
 
@@ -153,8 +155,10 @@ body{font-family:var(--font);color:var(--text);-webkit-font-smoothing:antialiase
   $('spName').textContent = C.NAME || '';
   $('spSub').textContent = C.SUB || '';
   $('spCopy').textContent = '© ' + year + ' جميع الحقوق الفكرية محفوظة — ' + (C.OWNER || '');
-  document.title = C.NAME || document.title;
-  frame.title = C.NAME || '';
+  var FULL = (C.BRAND ? C.BRAND + ' - ' : '') + (C.NAME || '');
+  $('spBrand').textContent = C.BRAND || '';
+  document.title = FULL || document.title;
+  frame.title = FULL;
 
   function validUrl(u) { return /^https:\/\/script\.google\.com\/(a\/[^\/]+\/)?macros\/s\/[\w-]+\/exec/.test(String(u || '')); }
 
@@ -168,7 +172,7 @@ body{font-family:var(--font);color:var(--text);-webkit-font-smoothing:antialiase
     $('stTitle').textContent = s[1];
     $('stMsg').textContent = s[2];
     $('stRetry').classList.toggle('hidden', kind === 'config');
-    $('stFoot').textContent = (C.NAME || '') + ' · v' + (C.VERSION || '');
+    $('stFoot').textContent = FULL + ' · v' + (C.VERSION || '');
     $('state').classList.remove('hidden');
     splash.classList.add('out');
   }
